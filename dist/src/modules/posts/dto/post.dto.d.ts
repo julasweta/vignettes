@@ -9,7 +9,7 @@ export declare class UpdatePostDto {
     translations?: PostTranslation[];
     images?: string[];
 }
-export type PostResponse = {
+export declare class PostResponse {
     id: number;
     translations: {
         id: number;
@@ -21,4 +21,4 @@ export type PostResponse = {
         id: number;
         url: string;
     }[];
-};
+}

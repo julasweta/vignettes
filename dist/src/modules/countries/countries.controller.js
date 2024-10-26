@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CountriesController = void 0;
 const common_1 = require("@nestjs/common");
 const countries_service_1 = require("./countries.service");
+const swagger_1 = require("@nestjs/swagger");
 let CountriesController = class CountriesController {
     constructor(countriesService) {
         this.countriesService = countriesService;
@@ -33,12 +34,23 @@ let CountriesController = class CountriesController {
 exports.CountriesController = CountriesController;
 __decorate([
     (0, common_1.Get)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Отримати всі країни' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Список країн' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], CountriesController.prototype, "getAllCountries", null);
 __decorate([
     (0, common_1.Get)(':id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Отримати країну за ID' }),
+    (0, swagger_1.ApiParam)({
+        name: 'id',
+        type: Number,
+        required: true,
+        description: 'ID країни',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Деталі країни' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Країна не знайдена' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
@@ -46,11 +58,13 @@ __decorate([
 ], CountriesController.prototype, "getCountryById", null);
 __decorate([
     (0, common_1.Post)('sync'),
+    (0, swagger_1.ApiExcludeEndpoint)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], CountriesController.prototype, "syncCountries", null);
 exports.CountriesController = CountriesController = __decorate([
+    (0, swagger_1.ApiTags)('countries'),
     (0, common_1.Controller)('countries'),
     __metadata("design:paramtypes", [countries_service_1.CountriesService])
 ], CountriesController);

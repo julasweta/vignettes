@@ -11,14 +11,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateLanguageDto = void 0;
 const class_validator_1 = require("class-validator");
+const swagger_1 = require("@nestjs/swagger");
 class CreateLanguageDto {
 }
 exports.CreateLanguageDto = CreateLanguageDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Код мови (наприклад, "en", "fr")' }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateLanguageDto.prototype, "code", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Назва мови' }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateLanguageDto.prototype, "name", void 0);

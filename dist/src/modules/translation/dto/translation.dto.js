@@ -11,22 +11,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdatePostTranslationDto = exports.CreatePostTranslationDto = void 0;
 const class_validator_1 = require("class-validator");
+const swagger_1 = require("@nestjs/swagger");
 class CreatePostTranslationDto {
 }
 exports.CreatePostTranslationDto = CreatePostTranslationDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'ID посту, до якого відноситься переклад',
+    }),
     (0, class_validator_1.IsInt)(),
     __metadata("design:type", Number)
 ], CreatePostTranslationDto.prototype, "post_id", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'ID мови, на яку здійснюється переклад',
+    }),
     (0, class_validator_1.IsInt)(),
     __metadata("design:type", Number)
 ], CreatePostTranslationDto.prototype, "language_id", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Заголовок перекладу',
+    }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreatePostTranslationDto.prototype, "title", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Опис перекладу',
+    }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreatePostTranslationDto.prototype, "description", void 0);
@@ -34,18 +47,38 @@ class UpdatePostTranslationDto {
 }
 exports.UpdatePostTranslationDto = UpdatePostTranslationDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'ID посту, до якого відноситься переклад',
+        required: false,
+    }),
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsInt)(),
     __metadata("design:type", Number)
 ], UpdatePostTranslationDto.prototype, "post_id", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'ID мови, на яку здійснюється переклад',
+        required: false,
+    }),
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsInt)(),
     __metadata("design:type", Number)
 ], UpdatePostTranslationDto.prototype, "language_id", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Заголовок перекладу',
+        required: false,
+    }),
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], UpdatePostTranslationDto.prototype, "title", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Опис перекладу',
+        required: false,
+    }),
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], UpdatePostTranslationDto.prototype, "description", void 0);
