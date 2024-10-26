@@ -31,8 +31,6 @@ async function bootstrap() {
 
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(process.env.PORT, () => {
-    Logger.log(`http://${process.env.HOST}:${process.env.PORT}/api`, 'Doc');
-  });
+  await app.listen(3000);
 }
 bootstrap();
