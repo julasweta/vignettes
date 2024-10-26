@@ -10,7 +10,6 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.use(cors());
-  app.enableCors();
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -32,6 +31,8 @@ async function bootstrap() {
 
   SwaggerModule.setup('api', app, document);
 
-  await app.listen();
+  await app.listen(process.env.PORT, () => {
+    Logger.log(`http://${process.env.HOST}:${process.env.PORT}/api`, 'Doc');
+  });
 }
 bootstrap();
