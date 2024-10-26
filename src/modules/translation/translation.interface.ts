@@ -4,4 +4,4 @@ export interface PostTranslationType {
   language_id: number;
   title: string;
   description: string;
-};
+}
