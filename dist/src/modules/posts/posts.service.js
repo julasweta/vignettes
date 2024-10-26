@@ -88,6 +88,12 @@ let PostService = class PostService {
     }
     async remove(id) {
         await this.findOne(id);
+        await this.prisma.postTranslation.deleteMany({
+            where: { post_id: id },
+        });
+        await this.prisma.image.deleteMany({
+            where: { post_id: id },
+        });
         return this.prisma.post.delete({
             where: { id },
             include: {

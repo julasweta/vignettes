@@ -32,7 +32,7 @@ model PostTranslation {
   language_id Int
   title        String
   description String
-  post     Post    @relation(fields: [post_id], references: [id])
+  post       Post    @relation(fields: [post_id], references: [id], onDelete: Cascade) 
   language    Language   @relation(fields: [language_id], references: [id]) // Зв'язок з Language
 }
 

@@ -94,9 +94,20 @@ export class PostService {
   }
 
   async remove(id: number) {
-    // Перевіряємо чи існує пост
+    // Перевіряємо, чи існує пост
     await this.findOne(id);
 
+    // Видаляємо всі пов'язані переклади
+    await this.prisma.postTranslation.deleteMany({
+      where: { post_id: id },
+    });
+
+    // Видаляємо всі пов'язані зображення (якщо потрібно)
+    await this.prisma.image.deleteMany({
+      where: { post_id: id },
+    });
+
+    // Тепер видаляємо пост
     return this.prisma.post.delete({
       where: { id },
       include: {
