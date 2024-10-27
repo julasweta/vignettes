@@ -5,7 +5,11 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { CreatePostDto, UpdatePostDto } from './dto/post.dto';
+import {
+  CreatePostDto,
+  PostListQuerytDto,
+  UpdatePostDto,
+} from './dto/post.dto';
 import { PrismaService } from '../../../prisma/prisma.service';
 import { Country, Image, Post, PostTranslation } from '@prisma/client';
 
@@ -31,7 +35,7 @@ export class PostService {
       );
     }
 
-     const isCountryExists = await this.prisma.country.findUnique({
+    const isCountryExists = await this.prisma.country.findUnique({
       where: { id: createPostDto.country_id },
     });
 
@@ -83,13 +87,27 @@ export class PostService {
     };
   }
 
-  async findAll() {
-    return this.prisma.post.findMany({
-      include: {
-        translations: true,
-        images: true,
-      },
-    });
+  async findAll(query: PostListQuerytDto) {
+    console.log(query);
+    try {
+      const filter: Record<string, any> = {};
+
+      // Додаємо фільтр за секцією, якщо він переданий в запиті
+      if (query.section_id) {
+        filter.section_id = +query.section_id; // Використовуємо `sectionId` для фільтрації за ID секції
+      }
+
+      // Повертаємо всі пости з фільтрацією
+      return this.prisma.post.findMany({
+        where: filter,
+        include: {
+          translations: true,
+          images: true,
+        },
+      });
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.BAD_REQUEST);
+    }
   }
 
   async findOne(id: number) {

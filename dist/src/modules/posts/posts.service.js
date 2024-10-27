@@ -56,13 +56,24 @@ let PostService = class PostService {
             images,
         };
     }
-    async findAll() {
-        return this.prisma.post.findMany({
-            include: {
-                translations: true,
-                images: true,
-            },
-        });
+    async findAll(query) {
+        console.log(query);
+        try {
+            const filter = {};
+            if (query.section_id) {
+                filter.section_id = +query.section_id;
+            }
+            return this.prisma.post.findMany({
+                where: filter,
+                include: {
+                    translations: true,
+                    images: true,
+                },
+            });
+        }
+        catch (error) {
+            throw new common_1.HttpException(error, common_1.HttpStatus.BAD_REQUEST);
+        }
     }
     async findOne(id) {
         const post = await this.prisma.post.findUnique({

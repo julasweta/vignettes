@@ -1,4 +1,4 @@
-import { CreatePostDto, UpdatePostDto } from './dto/post.dto';
+import { CreatePostDto, PostListQuerytDto, UpdatePostDto } from './dto/post.dto';
 import { PostService } from './posts.service';
 export declare class PostController {
     private readonly postService;
@@ -12,7 +12,7 @@ export declare class PostController {
         images: import(".prisma/client").Image[];
         country: import(".prisma/client").Country | null;
     }>;
-    findAll(): Promise<({
+    findAll(query: PostListQuerytDto): Promise<({
         translations: {
             id: number;
             post_id: number;

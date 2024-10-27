@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PostResponse = exports.UpdatePostDto = exports.CreatePostDto = void 0;
+exports.PostListQuerytDto = exports.PostResponse = exports.UpdatePostDto = exports.CreatePostDto = void 0;
 const class_validator_1 = require("class-validator");
 const swagger_1 = require("@nestjs/swagger");
 const translation_dto_1 = require("../../translation/dto/translation.dto");
@@ -106,4 +106,12 @@ __decorate([
     }),
     __metadata("design:type", Array)
 ], PostResponse.prototype, "images", void 0);
+class PostListQuerytDto {
+}
+exports.PostListQuerytDto = PostListQuerytDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({ required: false }),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Number)
+], PostListQuerytDto.prototype, "section_id", void 0);
 //# sourceMappingURL=post.dto.js.map

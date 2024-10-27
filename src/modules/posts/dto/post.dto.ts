@@ -89,3 +89,9 @@ export class PostResponse {
   })
   images: [CreateImageDto][];
 }
+
+export class PostListQuerytDto {
+  @ApiProperty({ required: false })
+  @IsOptional()
+  section_id?: number;
+}

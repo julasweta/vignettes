@@ -1,4 +1,4 @@
-import { CreatePostDto, UpdatePostDto } from './dto/post.dto';
+import { CreatePostDto, PostListQuerytDto, UpdatePostDto } from './dto/post.dto';
 import { PrismaService } from '../../../prisma/prisma.service';
 import { Country, Image, Post, PostTranslation } from '@prisma/client';
 export declare class PostService {
@@ -9,7 +9,7 @@ export declare class PostService {
         images: Image[];
         country: Country | null;
     }>;
-    findAll(): Promise<({
+    findAll(query: PostListQuerytDto): Promise<({
         translations: {
             id: number;
             post_id: number;

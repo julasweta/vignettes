@@ -19,3 +19,6 @@ export declare class PostResponse {
     country: CountryDto[];
     images: [CreateImageDto][];
 }
+export declare class PostListQuerytDto {
+    section_id?: number;
+}
