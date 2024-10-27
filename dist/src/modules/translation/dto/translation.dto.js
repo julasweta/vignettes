@@ -72,15 +72,6 @@ class UpdatePostTranslationDto {
 exports.UpdatePostTranslationDto = UpdatePostTranslationDto;
 __decorate([
     (0, swagger_1.ApiProperty)({
-        description: 'ID посту, до якого відноситься переклад',
-        required: false,
-    }),
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsInt)(),
-    __metadata("design:type", Number)
-], UpdatePostTranslationDto.prototype, "post_id", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({
         description: 'ID мови, на яку здійснюється переклад',
         required: false,
     }),

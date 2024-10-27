@@ -17,6 +17,18 @@ let PostService = class PostService {
         this.prisma = prisma;
     }
     async create(createPostDto) {
+        const isSectionExists = await this.prisma.section.findUnique({
+            where: { id: createPostDto.section_id },
+        });
+        if (!isSectionExists) {
+            throw new common_1.NotFoundException(`Section with ID ${createPostDto.section_id} not found`);
+        }
+        const isCountryExists = await this.prisma.country.findUnique({
+            where: { id: createPostDto.country_id },
+        });
+        if (!isCountryExists) {
+            throw new common_1.NotFoundException(`Country with ID ${createPostDto.section_id} not found`);
+        }
         const post = await this.prisma.post.create({
             data: {
                 section_id: createPostDto.section_id,

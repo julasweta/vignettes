@@ -21,6 +21,26 @@ export class PostService {
       country: Country | null;
     }
   > {
+    const isSectionExists = await this.prisma.section.findUnique({
+      where: { id: createPostDto.section_id },
+    });
+
+    if (!isSectionExists) {
+      throw new NotFoundException(
+        `Section with ID ${createPostDto.section_id} not found`,
+      );
+    }
+
+     const isCountryExists = await this.prisma.country.findUnique({
+      where: { id: createPostDto.country_id },
+    });
+
+    if (!isCountryExists) {
+      throw new NotFoundException(
+        `Country with ID ${createPostDto.section_id} not found`,
+      );
+    }
+
     // 1. Створюємо основний пост і отримуємо його ID
     const post = await this.prisma.post.create({
       data: {

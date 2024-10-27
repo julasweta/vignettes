@@ -11,7 +11,6 @@ export declare class CreatePostTranslationDto {
     description: string;
 }
 export declare class UpdatePostTranslationDto implements Partial<Omit<PostTranslation, 'id'>> {
-    post_id?: number;
     language_id?: number;
     title?: string;
     description?: string;

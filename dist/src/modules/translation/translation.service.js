@@ -29,6 +29,15 @@ let PostTranslationService = class PostTranslationService {
         if (!language) {
             throw new common_1.NotFoundException(`Language with ID ${createPostTranslationDto.language_id} not found`);
         }
+        const existingTranslation = await this.prisma.postTranslation.findFirst({
+            where: {
+                post_id: createPostTranslationDto.post_id,
+                language_id: createPostTranslationDto.language_id,
+            },
+        });
+        if (existingTranslation) {
+            throw new common_1.HttpException(`Translation already exists for post ID ${createPostTranslationDto.post_id} and language ID ${createPostTranslationDto.language_id}`, common_1.HttpStatus.CONFLICT);
+        }
         return this.prisma.postTranslation.create({
             data: createPostTranslationDto,
             include: {
@@ -59,31 +68,33 @@ let PostTranslationService = class PostTranslationService {
         return translation;
     }
     async update(id, updatePostTranslationDto) {
-        await this.findOne(id);
-        if (updatePostTranslationDto.post_id) {
-            const post = await this.prisma.post.findUnique({
-                where: { id: updatePostTranslationDto.post_id },
-            });
-            if (!post) {
-                throw new common_1.NotFoundException(`Post with ID ${updatePostTranslationDto.post_id} not found`);
-            }
+        const existingTranslation = await this.findOne(id);
+        if (!existingTranslation) {
+            throw new common_1.NotFoundException(`Translation with ID ${id} not found`);
         }
+        const postId = existingTranslation.post_id;
         if (updatePostTranslationDto.language_id) {
-            const language = await this.prisma.language.findUnique({
-                where: { id: updatePostTranslationDto.language_id },
+            const existingPostTranslation = await this.prisma.postTranslation.findFirst({
+                where: {
+                    post_id: postId,
+                    language_id: updatePostTranslationDto.language_id,
+                },
             });
-            if (!language) {
-                throw new common_1.NotFoundException(`Language with ID ${updatePostTranslationDto.language_id} not found`);
+            if (existingPostTranslation && existingPostTranslation.id !== id) {
+                throw new common_1.HttpException(`Translation already exists for post ID ${postId} and language ID ${updatePostTranslationDto.language_id}`, common_1.HttpStatus.CONFLICT);
             }
         }
-        return this.prisma.postTranslation.update({
+        const updatedTranslation = await this.prisma.postTranslation.update({
             where: { id },
-            data: updatePostTranslationDto,
-            include: {
-                post: true,
-                language: true,
+            data: {
+                language_id: updatePostTranslationDto.language_id ??
+                    existingTranslation.language_id,
+                title: updatePostTranslationDto.title ?? existingTranslation.title,
+                description: updatePostTranslationDto.description ??
+                    existingTranslation.description,
             },
         });
+        return updatedTranslation;
     }
     async remove(id) {
         await this.findOne(id);

@@ -53,14 +53,6 @@ export class UpdatePostTranslationDto
   implements Partial<Omit<PostTranslation, 'id'>>
 {
   @ApiProperty({
-    description: 'ID посту, до якого відноситься переклад',
-    required: false, // Вказуємо, що це поле є необов’язковим
-  })
-  @IsOptional()
-  @IsInt()
-  post_id?: number;
-
-  @ApiProperty({
     description: 'ID мови, на яку здійснюється переклад',
     required: false, // Вказуємо, що це поле є необов’язковим
   })
