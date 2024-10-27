@@ -9,19 +9,43 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdatePostTranslationDto = exports.CreatePostTranslationDto = void 0;
+exports.UpdatePostTranslationDto = exports.CreatePostTranslationDto = exports.BasePostTranslationDto = void 0;
 const class_validator_1 = require("class-validator");
 const swagger_1 = require("@nestjs/swagger");
-class CreatePostTranslationDto {
+class BasePostTranslationDto {
 }
-exports.CreatePostTranslationDto = CreatePostTranslationDto;
+exports.BasePostTranslationDto = BasePostTranslationDto;
 __decorate([
     (0, swagger_1.ApiProperty)({
         description: 'ID посту, до якого відноситься переклад',
     }),
     (0, class_validator_1.IsInt)(),
     __metadata("design:type", Number)
-], CreatePostTranslationDto.prototype, "post_id", void 0);
+], BasePostTranslationDto.prototype, "post_id", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'ID мови, на яку здійснюється переклад',
+    }),
+    (0, class_validator_1.IsInt)(),
+    __metadata("design:type", Number)
+], BasePostTranslationDto.prototype, "language_id", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Заголовок перекладу',
+    }),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], BasePostTranslationDto.prototype, "title", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Опис перекладу',
+    }),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], BasePostTranslationDto.prototype, "description", void 0);
+class CreatePostTranslationDto {
+}
+exports.CreatePostTranslationDto = CreatePostTranslationDto;
 __decorate([
     (0, swagger_1.ApiProperty)({
         description: 'ID мови, на яку здійснюється переклад',

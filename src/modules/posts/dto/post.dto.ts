@@ -7,7 +7,10 @@ import {
   IsNumber,
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'; // Імпортуємо ApiProperty
-import { PostTranslation } from '@prisma/client';
+import { PostTranslation, Country } from '@prisma/client';
+import { CreatePostTranslationDto } from '../../translation/dto/translation.dto';
+import { CreateImageDto } from '../../images/dto/create-image.dto';
+import { CountryDto } from '../../countries/dto/countries.dto';
 
 // DTO для створення поста
 export class CreatePostDto {
@@ -26,15 +29,15 @@ export class CreatePostDto {
   section_id?: number;
 
   @ApiProperty({
-    type: [], // Вказуємо, що це масив обʼєктів PostTranslation
+    type: [CreatePostTranslationDto],
   })
   @IsArray()
   @ValidateNested({ each: true })
-  translations: PostTranslation[];
+  translations: CreatePostTranslationDto[];
 
   @ApiPropertyOptional({
     description: 'Зображення поста',
-    type: [String], // Вказуємо, що це масив рядків
+    type: [String],
   })
   @IsArray()
   @IsString({ each: true })
@@ -43,6 +46,16 @@ export class CreatePostDto {
 
 // DTO для оновлення поста
 export class UpdatePostDto {
+  @ApiPropertyOptional({
+    description: 'Країни id',
+  })
+  country_id?: number;
+
+  @ApiPropertyOptional({
+    description: 'Section id',
+  })
+  section_id?: number;
+
   @ApiPropertyOptional({
     description: 'Переклади поста',
   })
@@ -66,35 +79,27 @@ export class PostResponse {
   })
   id: number;
 
+  @ApiProperty()
+  country_id: number;
+
+  @ApiProperty()
+  section_id: number;
+
   @ApiProperty({
     description: 'Переклади поста',
-    type: () => [
-      {
-        id: Number,
-        language_id: Number,
-        title: String,
-        description: String,
-      },
-    ],
+    type: [CreatePostTranslationDto],
   })
-  translations: {
-    id: number;
-    language_id: number;
-    title: string;
-    description: string;
-  }[];
+  translations: CreatePostTranslationDto[];
+
+  @ApiProperty({
+    description: 'Країна',
+    type: [CountryDto],
+  })
+  country: CountryDto[];
 
   @ApiProperty({
     description: 'Зображення поста',
-    type: () => [
-      {
-        id: Number,
-        url: String,
-      },
-    ],
+    type: [CreateImageDto],
   })
-  images: {
-    id: number;
-    url: string;
-  }[];
+  images: [CreateImageDto][];
 }

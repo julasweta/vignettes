@@ -17,25 +17,32 @@ let PostService = class PostService {
         this.prisma = prisma;
     }
     async create(createPostDto) {
-        return this.prisma.post.create({
+        const post = await this.prisma.post.create({
             data: {
                 section_id: createPostDto.section_id,
                 country_id: createPostDto.country_id,
-                translations: {
-                    create: createPostDto.translations,
-                },
-                images: {
-                    create: createPostDto.images?.map((url) => ({
-                        url,
-                    })) || [],
-                },
             },
             include: {
-                translations: true,
-                images: true,
                 country: true,
             },
         });
+        const translations = await Promise.all(createPostDto.translations.map((translation) => this.prisma.postTranslation.create({
+            data: {
+                ...translation,
+                post_id: post.id,
+            },
+        })));
+        const images = await Promise.all(createPostDto.images?.map((url) => this.prisma.image.create({
+            data: {
+                url,
+                post_id: post.id,
+            },
+        })) || []);
+        return {
+            ...post,
+            translations,
+            images,
+        };
     }
     async findAll() {
         return this.prisma.post.findMany({
@@ -79,6 +86,8 @@ let PostService = class PostService {
                         create: updatePostDto.images.map((url) => ({ url })),
                     }
                     : undefined,
+                country_id: updatePostDto.country_id,
+                section_id: updatePostDto.section_id,
             },
             include: {
                 translations: true,

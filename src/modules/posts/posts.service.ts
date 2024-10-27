@@ -8,33 +8,54 @@ import { Country, Image, Post, PostTranslation } from '@prisma/client';
 export class PostService {
   constructor(private prisma: PrismaService) {}
 
+  // post.service.ts
   async create(createPostDto: CreatePostDto): Promise<
     Post & {
       translations: PostTranslation[];
       images: Image[];
-      country: Country | null; // Додаємо country для включення в результат
+      country: Country | null;
     }
   > {
-    return this.prisma.post.create({
+    // 1. Створюємо основний пост і отримуємо його ID
+    const post = await this.prisma.post.create({
       data: {
         section_id: createPostDto.section_id,
         country_id: createPostDto.country_id,
-        translations: {
-          create: createPostDto.translations,
-        },
-        images: {
-          create:
-            createPostDto.images?.map((url) => ({
-              url,
-            })) || [],
-        },
       },
       include: {
-        translations: true,
-        images: true,
-        country: true, // Додаємо country для включення в результат
+        country: true,
       },
     });
+
+    // 2. Додаємо переклади та зображення, використовуючи `post.id`
+    const translations = await Promise.all(
+      createPostDto.translations.map((translation) =>
+        this.prisma.postTranslation.create({
+          data: {
+            ...translation,
+            post_id: post.id, // Встановлюємо post_id для кожного перекладу
+          },
+        }),
+      ),
+    );
+
+    const images = await Promise.all(
+      createPostDto.images?.map((url) =>
+        this.prisma.image.create({
+          data: {
+            url,
+            post_id: post.id, // Встановлюємо post_id для кожного зображення
+          },
+        }),
+      ) || [],
+    );
+
+    // Повертаємо пост разом із пов'язаними перекладами та зображеннями
+    return {
+      ...post,
+      translations,
+      images,
+    };
   }
 
   async findAll() {
@@ -71,7 +92,7 @@ export class PostService {
       data: {
         translations: updatePostDto.translations
           ? {
-              deleteMany: { post_id: id }, // Видаляємо старі переклади
+              deleteMany: { post_id: id },
               create: updatePostDto.translations.map((translation) => ({
                 language_id: translation.language_id,
                 title: translation.title,
@@ -81,10 +102,12 @@ export class PostService {
           : undefined,
         images: updatePostDto.images
           ? {
-              deleteMany: { post_id: id }, // Видаляємо старі зображення
+              deleteMany: { post_id: id },
               create: updatePostDto.images.map((url) => ({ url })),
             }
           : undefined,
+        country_id: updatePostDto.country_id,
+        section_id: updatePostDto.section_id,
       },
       include: {
         translations: true,

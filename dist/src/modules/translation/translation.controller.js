@@ -50,7 +50,7 @@ __decorate([
     (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.CREATED }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [translation_dto_1.CreatePostTranslationDto]),
+    __metadata("design:paramtypes", [translation_dto_1.BasePostTranslationDto]),
     __metadata("design:returntype", void 0)
 ], PostTranslationController.prototype, "create", null);
 __decorate([

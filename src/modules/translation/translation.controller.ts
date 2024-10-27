@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { PostTranslationService } from './translation.service';
 import {
-  CreatePostTranslationDto,
+  BasePostTranslationDto,
   UpdatePostTranslationDto,
 } from './dto/translation.dto';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
@@ -27,7 +27,7 @@ export class PostTranslationController {
   @Post()
   @ApiOperation({ summary: 'Create a new post translation' })
   @ApiResponse({ status: HttpStatus.CREATED })
-  create(@Body() createPostTranslationDto: CreatePostTranslationDto) {
+  create(@Body() createPostTranslationDto: BasePostTranslationDto) {
     return this.postTranslationService.create(createPostTranslationDto);
   }
 

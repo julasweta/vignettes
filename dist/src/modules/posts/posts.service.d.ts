@@ -12,16 +12,16 @@ export declare class PostService {
     findAll(): Promise<({
         translations: {
             id: number;
-            description: string;
-            title: string;
             post_id: number;
             language_id: number;
+            title: string;
+            description: string;
         }[];
         images: {
             id: number;
-            url: string;
-            post_id: number | null;
             country_id: number | null;
+            post_id: number | null;
+            url: string;
         }[];
     } & {
         id: number;
@@ -31,16 +31,16 @@ export declare class PostService {
     findOne(id: number): Promise<{
         translations: {
             id: number;
-            description: string;
-            title: string;
             post_id: number;
             language_id: number;
+            title: string;
+            description: string;
         }[];
         images: {
             id: number;
-            url: string;
-            post_id: number | null;
             country_id: number | null;
+            post_id: number | null;
+            url: string;
         }[];
     } & {
         id: number;
@@ -50,16 +50,16 @@ export declare class PostService {
     update(id: number, updatePostDto: UpdatePostDto): Promise<{
         translations: {
             id: number;
-            description: string;
-            title: string;
             post_id: number;
             language_id: number;
+            title: string;
+            description: string;
         }[];
         images: {
             id: number;
-            url: string;
-            post_id: number | null;
             country_id: number | null;
+            post_id: number | null;
+            url: string;
         }[];
     } & {
         id: number;
@@ -69,16 +69,16 @@ export declare class PostService {
     remove(id: number): Promise<{
         translations: {
             id: number;
-            description: string;
-            title: string;
             post_id: number;
             language_id: number;
+            title: string;
+            description: string;
         }[];
         images: {
             id: number;
-            url: string;
-            post_id: number | null;
             country_id: number | null;
+            post_id: number | null;
+            url: string;
         }[];
     } & {
         id: number;

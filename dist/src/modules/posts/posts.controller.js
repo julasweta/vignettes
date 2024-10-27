@@ -41,7 +41,7 @@ exports.PostController = PostController;
 __decorate([
     (0, common_1.Post)(),
     (0, swagger_1.ApiOperation)({ summary: 'Create a new post' }),
-    (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.CREATED }),
+    (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.CREATED, type: () => post_dto_1.PostResponse }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [post_dto_1.CreatePostDto]),

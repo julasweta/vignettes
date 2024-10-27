@@ -1,6 +1,11 @@
 import { PostTranslation } from '@prisma/client';
-export declare class CreatePostTranslationDto implements Omit<PostTranslation, 'id'> {
+export declare class BasePostTranslationDto implements Omit<PostTranslation, 'id'> {
     post_id: number;
+    language_id: number;
+    title: string;
+    description: string;
+}
+export declare class CreatePostTranslationDto {
     language_id: number;
     title: string;
     description: string;

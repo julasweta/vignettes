@@ -12,6 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PostResponse = exports.UpdatePostDto = exports.CreatePostDto = void 0;
 const class_validator_1 = require("class-validator");
 const swagger_1 = require("@nestjs/swagger");
+const translation_dto_1 = require("../../translation/dto/translation.dto");
+const create_image_dto_1 = require("../../images/dto/create-image.dto");
+const countries_dto_1 = require("../../countries/dto/countries.dto");
 class CreatePostDto {
 }
 exports.CreatePostDto = CreatePostDto;
@@ -33,7 +36,7 @@ __decorate([
 ], CreatePostDto.prototype, "section_id", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
-        type: [],
+        type: [translation_dto_1.CreatePostTranslationDto],
     }),
     (0, class_validator_1.IsArray)(),
     (0, class_validator_1.ValidateNested)({ each: true }),
@@ -51,6 +54,18 @@ __decorate([
 class UpdatePostDto {
 }
 exports.UpdatePostDto = UpdatePostDto;
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'Країни id',
+    }),
+    __metadata("design:type", Number)
+], UpdatePostDto.prototype, "country_id", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'Section id',
+    }),
+    __metadata("design:type", Number)
+], UpdatePostDto.prototype, "section_id", void 0);
 __decorate([
     (0, swagger_1.ApiPropertyOptional)({
         description: 'Переклади поста',
@@ -78,28 +93,31 @@ __decorate([
     __metadata("design:type", Number)
 ], PostResponse.prototype, "id", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], PostResponse.prototype, "country_id", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], PostResponse.prototype, "section_id", void 0);
+__decorate([
     (0, swagger_1.ApiProperty)({
         description: 'Переклади поста',
-        type: () => [
-            {
-                id: Number,
-                language_id: Number,
-                title: String,
-                description: String,
-            },
-        ],
+        type: [translation_dto_1.CreatePostTranslationDto],
     }),
     __metadata("design:type", Array)
 ], PostResponse.prototype, "translations", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
+        description: 'Країна',
+        type: [countries_dto_1.CountryDto],
+    }),
+    __metadata("design:type", Array)
+], PostResponse.prototype, "country", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
         description: 'Зображення поста',
-        type: () => [
-            {
-                id: Number,
-                url: String,
-            },
-        ],
+        type: [create_image_dto_1.CreateImageDto],
     }),
     __metadata("design:type", Array)
 ], PostResponse.prototype, "images", void 0);

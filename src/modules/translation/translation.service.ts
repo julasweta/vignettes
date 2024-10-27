@@ -1,7 +1,7 @@
 // post-translation.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import {
-  CreatePostTranslationDto,
+  BasePostTranslationDto,
   UpdatePostTranslationDto,
 } from './dto/translation.dto';
 import { PostTranslation } from '@prisma/client';
@@ -12,7 +12,7 @@ export class PostTranslationService {
   constructor(private prisma: PrismaService) {}
 
   async create(
-    createPostTranslationDto: CreatePostTranslationDto,
+    createPostTranslationDto: BasePostTranslationDto,
   ): Promise<PostTranslation> {
     // Перевіряємо чи існує пост
     const post = await this.prisma.post.findUnique({

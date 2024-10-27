@@ -1,10 +1,10 @@
-import { CreatePostTranslationDto, UpdatePostTranslationDto } from './dto/translation.dto';
+import { BasePostTranslationDto, UpdatePostTranslationDto } from './dto/translation.dto';
 import { PostTranslation } from '@prisma/client';
 import { PrismaService } from '../../../prisma/prisma.service';
 export declare class PostTranslationService {
     private prisma;
     constructor(prisma: PrismaService);
-    create(createPostTranslationDto: CreatePostTranslationDto): Promise<PostTranslation>;
+    create(createPostTranslationDto: BasePostTranslationDto): Promise<PostTranslation>;
     findAll(): Promise<PostTranslation[]>;
     findOne(id: number): Promise<PostTranslation>;
     update(id: number, updatePostTranslationDto: UpdatePostTranslationDto): Promise<PostTranslation>;
