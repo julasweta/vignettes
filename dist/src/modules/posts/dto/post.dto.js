@@ -58,31 +58,16 @@ __decorate([
     (0, swagger_1.ApiPropertyOptional)({
         description: 'Країни id',
     }),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Number)
 ], UpdatePostDto.prototype, "country_id", void 0);
 __decorate([
     (0, swagger_1.ApiPropertyOptional)({
         description: 'Section id',
     }),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Number)
 ], UpdatePostDto.prototype, "section_id", void 0);
-__decorate([
-    (0, swagger_1.ApiPropertyOptional)({
-        description: 'Переклади поста',
-    }),
-    (0, class_validator_1.IsArray)(),
-    (0, class_validator_1.ValidateNested)({ each: true }),
-    __metadata("design:type", Array)
-], UpdatePostDto.prototype, "translations", void 0);
-__decorate([
-    (0, swagger_1.ApiPropertyOptional)({
-        description: 'Зображення поста',
-        type: [String],
-    }),
-    (0, class_validator_1.IsArray)(),
-    (0, class_validator_1.IsString)({ each: true }),
-    __metadata("design:type", Array)
-], UpdatePostDto.prototype, "images", void 0);
 class PostResponse {
 }
 exports.PostResponse = PostResponse;

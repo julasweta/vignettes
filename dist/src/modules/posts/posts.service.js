@@ -66,29 +66,24 @@ let PostService = class PostService {
         return post;
     }
     async update(id, updatePostDto) {
-        await this.findOne(id);
-        return this.prisma.post.update({
+        const post = await this.findOne(id);
+        if (!post) {
+            throw new common_1.HttpException('Post not found', common_1.HttpStatus.NOT_FOUND);
+        }
+        if (updatePostDto.country_id) {
+            await this.prisma.post.update({
+                where: { id },
+                data: { country_id: updatePostDto.country_id },
+            });
+        }
+        if (updatePostDto.section_id) {
+            await this.prisma.post.update({
+                where: { id },
+                data: { section_id: updatePostDto.section_id },
+            });
+        }
+        return this.prisma.post.findUnique({
             where: { id },
-            data: {
-                translations: updatePostDto.translations
-                    ? {
-                        deleteMany: { post_id: id },
-                        create: updatePostDto.translations.map((translation) => ({
-                            language_id: translation.language_id,
-                            title: translation.title,
-                            description: translation.description,
-                        })),
-                    }
-                    : undefined,
-                images: updatePostDto.images
-                    ? {
-                        deleteMany: { post_id: id },
-                        create: updatePostDto.images.map((url) => ({ url })),
-                    }
-                    : undefined,
-                country_id: updatePostDto.country_id,
-                section_id: updatePostDto.section_id,
-            },
             include: {
                 translations: true,
                 images: true,

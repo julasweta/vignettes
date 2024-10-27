@@ -11,18 +11,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateImageDto = void 0;
 const class_validator_1 = require("class-validator");
+const swagger_1 = require("@nestjs/swagger");
 class CreateImageDto {
 }
 exports.CreateImageDto = CreateImageDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'URL of the image' }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateImageDto.prototype, "url", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Optional post ID to associate the image',
+        required: false,
+    }),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Number)
 ], CreateImageDto.prototype, "post_id", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Optional country ID to associate the image',
+        required: false,
+    }),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Number)
 ], CreateImageDto.prototype, "country_id", void 0);

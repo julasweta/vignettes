@@ -12,8 +12,6 @@ export declare class ImageService {
     getImageById(id: number): Promise<Image | null>;
     updateImage(id: number, data: {
         url?: string;
-        post_id?: number;
-        country_id?: number;
     }): Promise<Image>;
     deleteImage(id: number): Promise<Image>;
 }

@@ -6,7 +6,7 @@ export declare class SectionsService {
     constructor(prisma: PrismaService);
     create(createSectionDto: CreateSectionDto): Promise<Section>;
     findAll(): Promise<Section[]>;
-    findOne(id: number): Promise<Section | null>;
-    update(id: number, updateSectionsDto: UpdateSectionDto): Promise<Section>;
-    remove(id: number): Promise<Section>;
+    findOne(id: number): Promise<Section>;
+    update(id: number, updateSectionDto: UpdateSectionDto): Promise<Section>;
+    remove(id: number): Promise<string>;
 }

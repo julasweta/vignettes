@@ -25,20 +25,27 @@ let SectionsService = class SectionsService {
         return this.prisma.section.findMany();
     }
     async findOne(id) {
-        return this.prisma.section.findUnique({
+        const section = await this.prisma.section.findUnique({
             where: { id },
         });
+        if (!section) {
+            throw new common_1.NotFoundException(`Section with ID ${id} not found`);
+        }
+        return section;
     }
-    async update(id, updateSectionsDto) {
+    async update(id, updateSectionDto) {
+        const section = await this.findOne(id);
         return this.prisma.section.update({
-            where: { id },
-            data: updateSectionsDto,
+            where: { id: section.id },
+            data: updateSectionDto,
         });
     }
     async remove(id) {
-        return this.prisma.section.delete({
-            where: { id },
+        const section = await this.findOne(id);
+        this.prisma.section.delete({
+            where: { id: section.id },
         });
+        return `Section with ID ${id} delete`;
     }
 };
 exports.SectionsService = SectionsService;

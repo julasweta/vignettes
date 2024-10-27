@@ -7,7 +7,6 @@ import {
   IsNumber,
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'; // Імпортуємо ApiProperty
-import { PostTranslation, Country } from '@prisma/client';
 import { CreatePostTranslationDto } from '../../translation/dto/translation.dto';
 import { CreateImageDto } from '../../images/dto/create-image.dto';
 import { CountryDto } from '../../countries/dto/countries.dto';
@@ -49,27 +48,14 @@ export class UpdatePostDto {
   @ApiPropertyOptional({
     description: 'Країни id',
   })
+  @IsOptional()
   country_id?: number;
 
   @ApiPropertyOptional({
     description: 'Section id',
   })
+  @IsOptional()
   section_id?: number;
-
-  @ApiPropertyOptional({
-    description: 'Переклади поста',
-  })
-  @IsArray()
-  @ValidateNested({ each: true })
-  translations?: PostTranslation[];
-
-  @ApiPropertyOptional({
-    description: 'Зображення поста',
-    type: [String], // Вказуємо, що це масив рядків
-  })
-  @IsArray()
-  @IsString({ each: true })
-  images?: string[];
 }
 
 // Тип для відповіді

@@ -22,7 +22,11 @@ let ImageService = class ImageService {
         });
     }
     async getAllImages() {
-        return this.prisma.image.findMany();
+        return this.prisma.image.findMany({
+            orderBy: {
+                id: 'asc',
+            },
+        });
     }
     async getImageById(id) {
         return this.prisma.image.findUnique({
@@ -30,6 +34,10 @@ let ImageService = class ImageService {
         });
     }
     async updateImage(id, data) {
+        const existingImage = await this.prisma.image.findUnique({ where: { id } });
+        if (!existingImage) {
+            throw new common_1.HttpException('Image not found', common_1.HttpStatus.NOT_FOUND);
+        }
         return this.prisma.image.update({
             where: { id },
             data,

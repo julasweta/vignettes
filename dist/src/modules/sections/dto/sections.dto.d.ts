@@ -5,3 +5,7 @@ export declare class CreateSectionDto implements Prisma.SectionCreateInput {
 }
 export declare class UpdateSectionDto implements Partial<Section> {
 }
+export declare class ResponseSectionDto implements Partial<Section> {
+    id: number;
+    name: string;
+}

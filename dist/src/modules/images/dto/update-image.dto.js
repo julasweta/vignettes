@@ -19,12 +19,4 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], UpdateImageDto.prototype, "url", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", Number)
-], UpdateImageDto.prototype, "post_id", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", Number)
-], UpdateImageDto.prototype, "country_id", void 0);
 //# sourceMappingURL=update-image.dto.js.map

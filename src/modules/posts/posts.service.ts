@@ -1,5 +1,10 @@
 // post.service.ts
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreatePostDto, UpdatePostDto } from './dto/post.dto';
 import { PrismaService } from '../../../prisma/prisma.service';
 import { Country, Image, Post, PostTranslation } from '@prisma/client';
@@ -83,32 +88,33 @@ export class PostService {
     return post;
   }
 
+  /* translation, images змінється кожне окремо через їхні методі update by id */
   async update(id: number, updatePostDto: UpdatePostDto) {
-    // Перевіряємо чи існує пост
-    await this.findOne(id);
+    // Перевіряємо, чи існує пост
+    const post = await this.findOne(id);
 
-    return this.prisma.post.update({
+    if (!post) {
+      throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
+    }
+
+    // Оновлюємо поля країни та секції, якщо передані
+    if (updatePostDto.country_id) {
+      await this.prisma.post.update({
+        where: { id },
+        data: { country_id: updatePostDto.country_id },
+      });
+    }
+
+    if (updatePostDto.section_id) {
+      await this.prisma.post.update({
+        where: { id },
+        data: { section_id: updatePostDto.section_id },
+      });
+    }
+
+    // Повертаємо оновлений пост
+    return this.prisma.post.findUnique({
       where: { id },
-      data: {
-        translations: updatePostDto.translations
-          ? {
-              deleteMany: { post_id: id },
-              create: updatePostDto.translations.map((translation) => ({
-                language_id: translation.language_id,
-                title: translation.title,
-                description: translation.description,
-              })),
-            }
-          : undefined,
-        images: updatePostDto.images
-          ? {
-              deleteMany: { post_id: id },
-              create: updatePostDto.images.map((url) => ({ url })),
-            }
-          : undefined,
-        country_id: updatePostDto.country_id,
-        section_id: updatePostDto.section_id,
-      },
       include: {
         translations: true,
         images: true,
