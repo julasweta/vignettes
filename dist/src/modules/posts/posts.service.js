@@ -68,6 +68,7 @@ let PostService = class PostService {
                 include: {
                     translations: true,
                     images: true,
+                    country: true,
                 },
             });
         }

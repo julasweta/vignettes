@@ -103,6 +103,7 @@ export class PostService {
         include: {
           translations: true,
           images: true,
+          country: true,
         },
       });
     } catch (error) {
