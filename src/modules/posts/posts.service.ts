@@ -138,27 +138,42 @@ export class PostService {
       throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
     }
 
-    // Оновлюємо поля країни та секції, якщо передані
-    if (updatePostDto.country_id) {
+    // Оновлюємо поле `country_id` у `post` та пов’язаних `images`, якщо `country_id` передано і змінилось
+    if (
+      updatePostDto.country_id &&
+      updatePostDto.country_id !== post.country_id
+    ) {
+      // Оновлюємо `country_id` в основному записі `post`
       await this.prisma.post.update({
         where: { id },
         data: { country_id: updatePostDto.country_id },
       });
+
+      // Оновлюємо `country_id` у всіх `images`, які належать до цього посту
+      await this.prisma.image.updateMany({
+        where: { post_id: id },
+        data: { country_id: updatePostDto.country_id },
+      });
     }
 
-    if (updatePostDto.section_id) {
+    // Оновлюємо поле `section_id`, якщо передано
+    if (
+      updatePostDto.section_id &&
+      updatePostDto.section_id !== post.section_id
+    ) {
       await this.prisma.post.update({
         where: { id },
         data: { section_id: updatePostDto.section_id },
       });
     }
 
-    // Повертаємо оновлений пост
+    // Повертаємо оновлений пост із включенням `translations` та `images`
     return this.prisma.post.findUnique({
       where: { id },
       include: {
         translations: true,
         images: true,
+        country: true,
       },
     });
   }

@@ -96,13 +96,19 @@ let PostService = class PostService {
         if (!post) {
             throw new common_1.HttpException('Post not found', common_1.HttpStatus.NOT_FOUND);
         }
-        if (updatePostDto.country_id) {
+        if (updatePostDto.country_id &&
+            updatePostDto.country_id !== post.country_id) {
             await this.prisma.post.update({
                 where: { id },
                 data: { country_id: updatePostDto.country_id },
             });
+            await this.prisma.image.updateMany({
+                where: { post_id: id },
+                data: { country_id: updatePostDto.country_id },
+            });
         }
-        if (updatePostDto.section_id) {
+        if (updatePostDto.section_id &&
+            updatePostDto.section_id !== post.section_id) {
             await this.prisma.post.update({
                 where: { id },
                 data: { section_id: updatePostDto.section_id },
@@ -113,6 +119,7 @@ let PostService = class PostService {
             include: {
                 translations: true,
                 images: true,
+                country: true,
             },
         });
     }
