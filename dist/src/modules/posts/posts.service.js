@@ -48,6 +48,7 @@ let PostService = class PostService {
             data: {
                 url,
                 post_id: post.id,
+                country_id: createPostDto.country_id,
             },
         })) || []);
         return {

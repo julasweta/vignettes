@@ -19,5 +19,5 @@ export class CreateImageDto implements Partial<Image> {
     required: false,
   }) // Опис для Swagger
   @IsOptional()
-  country_id?: number; // Зовнішній ключ для Country (необов\'язкове поле)
+  country_id: number; // Зовнішній ключ для Country (необов\'язкове поле)
 }

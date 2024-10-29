@@ -74,6 +74,7 @@ export class PostService {
           data: {
             url,
             post_id: post.id, // Встановлюємо post_id для кожного зображення
+            country_id: createPostDto.country_id,
           },
         }),
       ) || [],

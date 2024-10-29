@@ -13,9 +13,22 @@ export declare class PostController {
         country: import(".prisma/client").Country | null;
     }>;
     findAll(query: PostListQuerytDto): Promise<({
-        country: {
-            region: string | null;
+        translations: {
             id: number;
+            post_id: number;
+            language_id: number;
+            title: string;
+            description: string;
+        }[];
+        images: {
+            id: number;
+            country_id: number | null;
+            post_id: number | null;
+            url: string;
+        }[];
+        country: {
+            id: number;
+            translations: import("@prisma/client/runtime/library").JsonValue | null;
             name: string;
             iso3: string;
             iso2: string;
@@ -27,6 +40,7 @@ export declare class PostController {
             currency_symbol: string | null;
             tld: string | null;
             native: string | null;
+            region: string | null;
             region_id: string | null;
             subregion: string | null;
             subregion_id: string | null;
@@ -36,33 +50,32 @@ export declare class PostController {
             emoji: string | null;
             emojiU: string | null;
             timezones: import("@prisma/client/runtime/library").JsonValue | null;
-            translations: import("@prisma/client/runtime/library").JsonValue | null;
             flag: string | null;
             geoData: string | null;
             has_toll_roads: boolean;
         };
-        translations: {
-            id: number;
-            description: string;
-            title: string;
-            post_id: number;
-            language_id: number;
-        }[];
-        images: {
-            id: number;
-            url: string;
-            post_id: number | null;
-            country_id: number | null;
-        }[];
     } & {
         id: number;
         country_id: number | null;
         section_id: number | null;
     })[]>;
     findOne(id: number): Promise<{
-        country: {
-            region: string | null;
+        translations: {
             id: number;
+            post_id: number;
+            language_id: number;
+            title: string;
+            description: string;
+        }[];
+        images: {
+            id: number;
+            country_id: number | null;
+            post_id: number | null;
+            url: string;
+        }[];
+        country: {
+            id: number;
+            translations: import("@prisma/client/runtime/library").JsonValue | null;
             name: string;
             iso3: string;
             iso2: string;
@@ -74,6 +87,7 @@ export declare class PostController {
             currency_symbol: string | null;
             tld: string | null;
             native: string | null;
+            region: string | null;
             region_id: string | null;
             subregion: string | null;
             subregion_id: string | null;
@@ -83,24 +97,10 @@ export declare class PostController {
             emoji: string | null;
             emojiU: string | null;
             timezones: import("@prisma/client/runtime/library").JsonValue | null;
-            translations: import("@prisma/client/runtime/library").JsonValue | null;
             flag: string | null;
             geoData: string | null;
             has_toll_roads: boolean;
         };
-        translations: {
-            id: number;
-            description: string;
-            title: string;
-            post_id: number;
-            language_id: number;
-        }[];
-        images: {
-            id: number;
-            url: string;
-            post_id: number | null;
-            country_id: number | null;
-        }[];
     } & {
         id: number;
         country_id: number | null;
@@ -109,16 +109,16 @@ export declare class PostController {
     update(id: number, updatePostDto: UpdatePostDto): Promise<{
         translations: {
             id: number;
-            description: string;
-            title: string;
             post_id: number;
             language_id: number;
+            title: string;
+            description: string;
         }[];
         images: {
             id: number;
-            url: string;
-            post_id: number | null;
             country_id: number | null;
+            post_id: number | null;
+            url: string;
         }[];
     } & {
         id: number;
@@ -128,16 +128,16 @@ export declare class PostController {
     remove(id: number): Promise<{
         translations: {
             id: number;
-            description: string;
-            title: string;
             post_id: number;
             language_id: number;
+            title: string;
+            description: string;
         }[];
         images: {
             id: number;
-            url: string;
-            post_id: number | null;
             country_id: number | null;
+            post_id: number | null;
+            url: string;
         }[];
     } & {
         id: number;
